@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh 
 ssh usac_sistemas2013@34.125.253.113 <<EOF
  cd ~/SA_Practica3
  git pull origin main
