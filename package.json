@@ -3,11 +3,16 @@
    "description": "hello jenkins test app",
    "version": "0.0.1",
    "private": true,
+   "scripts": {
+      "start": "node index.js",
+      "test": "mocha -r ts-node/register 'tests/**/*.ts'",
+      "coverage": "nyc --reporter=text mocha test/**/*.test.js --exit"
+   },
    "dependencies": {
       "express": "3.12.0"
    },
    "devDependencies": {
-      "mocha": "1.20.1",
+      "mocha": "^1.20.1",
       "supertest": "0.13.0"
    }
 }
