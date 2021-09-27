@@ -1,0 +1,69 @@
+- hosts: all
+  
+  become: yes
+
+  vars:
+    - homeDir: /home/
+    - appDir : app
+    - repo: SA_Practica5
+    - account: BrandonPedroza
+    - privateKey:  /var/lib/jenkins/.ssh/id_rsa
+
+
+  tasks:
+
+  - name: npm package
+    apt:
+      name: npm
+      update_cache: yes 
+      state: latest
+  
+  - name: git package
+    apt:
+      name: git 
+      update_cache: yes 
+      state: latest
+  
+  - name: mcrypt package
+    apt:
+      name: mcrypt 
+      update_cache: yes 
+      state: latest
+  
+  - name: curl package
+    apt:
+      name: curl 
+      update_cache: yes 
+      state: latest
+  
+
+  - name: Install pm2
+    npm: name=pm2 global=yes production=yes
+
+  - name: Create APP Directory
+    file: path={{homeDir}}/{{appDir}} state=directory
+
+  - name: Copy Private Key
+    copy: src={{privateKey}} dest={{homeDir}} mode=0600
+
+  - name: Git Clone Repo
+    git:
+     repo: https://github.com/BrandonPedroza/SA_Practica5.git
+     dest: /home/{{appDir}}
+     clone: yes
+     update: yes
+    register: git_finished
+
+  - name: Running NPM install
+    npm: path={{homeDir}}/{{appDir}}
+    register: npm_finished
+    when: git_finished.changed
+
+  - name: Stop APP
+    command: pm2 stop app chdir={{homeDir}}/{{appDir}}
+    ignore_errors: yes
+
+  - name: Start APP
+    command: pm2 start index.js --name app chdir={{homeDir}}/{{appDir}}
+    ignore_errors: yes
+    
