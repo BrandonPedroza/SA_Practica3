@@ -2,13 +2,13 @@
 # Cookbook:: apache
 # Recipe:: default
 #
-
-package 'apache2'
-
-file '/var/www/html/index.html' do
-  content "<h2>This is: #{node['name']}</h2><h1>HELLO WORLD FOR SA :D</h1>"
-end
-
-service 'apache2' do
-  action [ :enable, :start ]
+application "hello-world" do
+  path "/var/www/nodejs/hello-world"
+  owner "www-data"
+  group "www-data"
+  packages ["git"]
+  repository "https://github.com/BrandonPedroza/SA_Practica6.git"
+  nodejs do
+    entry_point "index.js"
+  end
 end
