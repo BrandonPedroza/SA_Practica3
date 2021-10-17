@@ -3,4 +3,4 @@
 
 # 201314079
 -*-*-*-*-*-*-
-Video en Youtube: [PRACTICA #6](https://youtu.be/1T6-8DZpSHs)
+Video en Youtube: [PRACTICA #6](https://youtu.be/ET_EOQ_3Qm0)
